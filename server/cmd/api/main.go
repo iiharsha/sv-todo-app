@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/iiharsha/sv-todo-app/internal/jsonlog"
 	"github.com/joho/godotenv"
 )
 
@@ -22,7 +23,7 @@ type config struct {
 
 type application struct {
 	config config
-	logger *log.Logger
+	logger *jsonlog.Logger
 }
 
 func main() {
@@ -45,7 +46,7 @@ func main() {
 	flag.StringVar(&cfg.env, "env", env, "Environment (dev|staging|prod)")
 	flag.Parse()
 
-	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
+	logger := jsonlog.New(os.Stdout, jsonlog.LevelInfo)
 
 	app := &application{
 		config: cfg,
@@ -55,22 +56,18 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	router := gin.New()
-	router.Use(gin.LoggerWithWriter(logger.Writer()), gin.Recovery())
-
-	v1 := router.Group("/v1")
-	v1.GET("/healthcheck", app.healthcheckHandler)
-
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
-		Handler:      router,
+		Handler:      app.routes(),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
 
-	logger.Printf("starting %s server on %s", cfg.env, srv.Addr)
-	if err := srv.ListenAndServe(); err != nil {
-		logger.Fatalf("server failed: %v", err)
-	}
+	logger.PrintInfo("starting server", map[string]string{
+		"addr": srv.Addr,
+		"env":  app.config.env,
+	})
+	err = srv.ListenAndServe()
+	logger.PrintFatal(err, nil)
 }

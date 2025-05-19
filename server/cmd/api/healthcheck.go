@@ -7,9 +7,16 @@ import (
 )
 
 func (app *application) healthcheckHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"status":      "available",
-		"environment": app.config.env,
-		"version":     version,
-	})
+	env := envelope{
+		"status": "available",
+		"system_info": map[string]string{
+			"environment": app.config.env,
+			"version":     version,
+		},
+	}
+
+	if err := app.writeJSON(c, http.StatusOK, env, nil); err != nil {
+		app.serverErrorResponse(c, err)
+	}
+
 }
