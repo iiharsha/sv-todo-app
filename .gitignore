@@ -1,0 +1,56 @@
+# Root .env files and all .env files anywhere
+**/.env
+
+# ====================
+# Go (server/)
+# ====================
+
+# Binaries
+/server/bin/
+/server/build/
+/server/dist/
+/server/*.exe
+/server/*.exe~
+/server/*.dll
+/server/*.so
+/server/*.dylib
+/server/*.test
+/server/*.out
+
+# Vendor directory
+/server/vendor/
+
+# Go modules
+/server/go.sum
+
+# Logs
+/server/*.log
+
+# ====================
+# Node / Svelte (client/)
+# ====================
+
+/client/node_modules/
+/client/.svelte-kit/
+/client/build/
+/client/public/build/
+
+# Typescript cache and build info
+/client/*.tsbuildinfo
+
+# Logs
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+
+# Lock files (optional, keep if needed)
+/client/package-lock.json
+/client/yarn.lock
+/client/pnpm-lock.yaml
+
+# ====================
+# Misc
+# ====================
+
+*.log
+
