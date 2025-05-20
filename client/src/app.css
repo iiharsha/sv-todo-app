@@ -1,3 +1,60 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@theme {
+    --color-lightgray: #ECECEC;
+    --color-deepPurple: #474747;
+    --color-indigo: #2C2C54;
+    --color-coolgray: #AAABB8;
+}
+
+:root {
+  --bg: #2C2C54;
+  --main-max-width: 1300px;
+
+  --zoo-github-corner-color: var(--bg);
+  --zoo-github-corner-bg: white;
+
+  --sms-bg: black;
+  --sms-max-width: 22em;
+  --sms-selected-bg: rgba(255, 255, 255, 0.15);
+  --sms-options-bg: #2e2935;
+  --sms-border: 1px solid #333;
+  --sms-li-active-bg: rgba(255, 255, 255, 0.15);
+  --sms-placeholder-color: gray;
+}
+body {
+  background: var(--bg);
+  padding: 1vw;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  margin: auto;
+  color: #ECECEC;
+  overflow-x: hidden;
+}
+main {
+  max-width: var(--main-max-width);
+  margin: auto;
+  margin-bottom: 3em;
+  width: 100%;
+}
+input[type='search'] {
+  border: 1px solid #333;
+  outline: none;
+  padding: 3pt 1ex;
+  border-radius: 3pt;
+  color: inherit;
+  background: black;
+  font-size: 1em;
+}
+input[type='search']::placeholder {
+  color: gray;
+}
+:where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 100px;
+}
+
+::highlight(highlight-match) {
+  color: mediumaquamarine;
+  text-decoration: underline;
+}
