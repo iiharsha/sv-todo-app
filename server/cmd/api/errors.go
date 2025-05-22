@@ -25,3 +25,15 @@ func (app *application) serverErrorResponse(c *gin.Context, err error) {
 	message := "the server encountered a problem and could not process your request"
 	app.errorResponse(c, http.StatusInternalServerError, message)
 }
+
+func (app *application) notFoundResponse(c *gin.Context) {
+	message := "the requested resource could not be found"
+
+	app.errorResponse(c, http.StatusNotFound, message)
+}
+
+func (app *application) methodNotAllowed(c *gin.Context) {
+	message := "method not allowed for this resource"
+
+	app.errorResponse(c, http.StatusMethodNotAllowed, message)
+}

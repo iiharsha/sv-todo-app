@@ -12,6 +12,8 @@ func (app *application) routes() *gin.Engine {
 	// router.Use(gin.Recovery())
 	router := gin.Default()
 
+	router.HandleMethodNotAllowed = true
+
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:5173"}, // or "*" during development
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -20,6 +22,9 @@ func (app *application) routes() *gin.Engine {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
+
+	router.NoMethod(app.methodNotAllowed)
+	router.NoRoute(app.notFoundResponse)
 
 	router.GET("v1/healthcheck", app.healthcheckHandler)
 	router.POST("v1/todos", app.createTodoHandler)

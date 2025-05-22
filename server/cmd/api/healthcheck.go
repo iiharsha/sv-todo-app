@@ -15,7 +15,8 @@ func (app *application) healthcheckHandler(c *gin.Context) {
 		},
 	}
 
-	if err := app.writeJSON(c, http.StatusOK, env, nil); err != nil {
+	err := app.writeJSON(c, http.StatusOK, env, nil)
+	if err != nil {
 		app.serverErrorResponse(c, err)
 	}
 
